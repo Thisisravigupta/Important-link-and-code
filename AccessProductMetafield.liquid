@@ -1,0 +1,4 @@
+{% assign productData = product.metafields.custom.choose_style.value %}
+  {% for product in productData %}
+    <div>{{ product.title }}</div>
+  {% endfor %}
