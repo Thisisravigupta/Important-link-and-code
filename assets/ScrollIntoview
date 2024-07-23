@@ -1,1 +1,102 @@
 
+<script>
+  // For Select size add to cart
+  let inputCustomRvs = document.querySelectorAll('.input_custom_rv');
+  let atcCustomRv = document.querySelector('.atc_custom_rv');
+  let shopifyBuyNow = document.querySelector('.shopify-payment-button button');
+  let selectSizeText = document.querySelector('.select_size_text');
+  let selectSizePopup = document.querySelector('.select_size_popup');
+  let sizeOptionWrapper = document.querySelector('.size_option_wrapper');
+
+  function disableElements() {
+    if (inputCustomRvs && atcCustomRv && shopifyBuyNow) {
+      inputCustomRvs.forEach((inputCustomRv) => {
+        inputCustomRv.removeAttribute('checked');
+      });
+      atcCustomRv.setAttribute('disabled', 'disabled');
+      shopifyBuyNow.setAttribute('disabled', 'disabled');
+    }
+  }
+
+  function removeVariantFromUrl() {
+    let url = window.location.href;
+    url = url.replace(/\?variant=\d+/, '');
+    window.history.replaceState({}, document.title, url);
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    disableElements();
+    removeVariantFromUrl();
+  });
+
+  // touchstart event for touch device
+  atcCustomRv?.addEventListener('touchstart', function () {
+    if (atcCustomRv.hasAttribute('disabled')) {
+      selectSizePopup.style.left = '20px';
+      selectSizePopup.style.right = 'unset';
+      scrollToSize();
+      sizeOptionWrapper.classList.add('vibrating');
+      setTimeout(() => {
+        sizeOptionWrapper.classList.remove('vibrating');
+      }, 500);
+    }
+  });
+
+  // pointerdown event for desktop
+  atcCustomRv?.addEventListener('pointerdown', function () {
+    if (atcCustomRv.hasAttribute('disabled')) {
+      selectSizePopup.style.left = '20px';
+      selectSizePopup.style.right = 'unset';
+      scrollToSize();
+      sizeOptionWrapper.classList.add('vibrating');
+      setTimeout(() => {
+        sizeOptionWrapper.classList.remove('vibrating');
+      }, 500);
+    }
+  });
+
+  // For Shopify checkout button
+
+  // // touchstart event for touch device
+  // shopifyCheckoutBtn?.addEventListener('touchstart', function () {
+  //   if (shopifyCheckoutBtn.getAttribute('aria-disabled') === 'true') {
+  //     selectSizePopup.style.left = 'unset';
+  //     selectSizePopup.style.right = '20px';
+  //     scrollToSize();
+  //     fieldSet.classList.add('vibrating');
+  //     setTimeout(() => {
+  //       fieldSet.classList.remove('vibrating');
+  //     }, 500);
+  //   }
+  // });
+
+  // // pointerdown event for desktop
+  // shopifyCheckoutBtn?.addEventListener('pointerdown', function () {
+  //   if (shopifyCheckoutBtn.getAttribute('aria-disabled') === 'true') {
+  //     selectSizePopup.style.left = 'unset';
+  //     selectSizePopup.style.right = '20px';
+  //     scrollToSize();
+  //     fieldSet.classList.add('vibrating');
+  //     setTimeout(() => {
+  //       fieldSet.classList.remove('vibrating');
+  //     }, 500);
+  //   }
+  // });
+
+  function scrollToSize() {
+    if (sizeOptionWrapper) {
+      selectSizeText.classList.remove('hidden_ss');
+      selectSizePopup.classList.remove('hidden_ss');
+
+      // Calculate the desired scroll position
+      const offsetTop = sizeOptionWrapper.offsetTop;
+      const middleOffset = offsetTop - window.innerHeight * 0.4; // Adjust as needed
+
+      // Scroll to the middle offset
+      window.scrollTo({
+        top: middleOffset,
+        behavior: 'smooth',
+      });
+    }
+  }
+</script>
